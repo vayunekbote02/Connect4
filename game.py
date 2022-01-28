@@ -101,6 +101,7 @@ while not gameover:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+            valid = False
             # Player 1
             if turn % 2 == 0:
                 posx = event.pos[0]
@@ -111,6 +112,7 @@ while not gameover:
                     drop_piece_on_board(board, row, col, 1)
                     print("Player 2's turn")
                     draw_board(board)
+                    valid = True
 
                 new_board = board.copy()
                 np.place(new_board, new_board == 2, 0)
@@ -131,6 +133,7 @@ while not gameover:
                     drop_piece_on_board(board, row, col, 2)
                     print("Player 1's turn")
                     draw_board(board)
+                    valid = True
 
                 new_board = board.copy()
                 np.place(new_board, new_board == 1, 0)
@@ -142,7 +145,8 @@ while not gameover:
                     gameover = True
                     pygame.display.update()
 
-            turn += 1
+            if valid:
+                turn += 1
 
             if gameover:
                 pygame.time.wait(5000)
